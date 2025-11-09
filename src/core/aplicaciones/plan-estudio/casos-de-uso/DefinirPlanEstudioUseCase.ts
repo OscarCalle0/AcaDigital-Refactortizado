@@ -27,7 +27,7 @@ export class DefinirPlanEstudioUseCase {
 
         const esDuplicado = await this.planRepo.existeVinculo(
             dto.programaId, 
-            dto.asignaturaId.toString()
+            dto.asignaturaId
         );
         if (esDuplicado) {
             throw new Error('La asignatura ya está registrada en este programa.'); 
