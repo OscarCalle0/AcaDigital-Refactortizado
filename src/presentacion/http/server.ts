@@ -33,7 +33,7 @@ import {
 import { PostgresProgramaAcademicoRepository } from '../../core/infraestructura/postgres/repositorio/postgres-programa-academico.pg.repository.js';
 import { registerProgramaAcademicoRoutes } from './rutas/programa-academico.rutas.js';
 
-// --- Inyección de Dependencias Manual ---
+// --- Inyeccion de Dependencias ---
 const programaRepository = new PostgresProgramaAcademicoRepository();
 
 const crearProgramaUseCase = new CrearProgramaAcademicoUseCase(programaRepository);
@@ -62,7 +62,7 @@ export const server = fastify({ logger: true });
 
 // --- Registrar Rutas ---
 
-// Programa Académico
+// Programa Academico
 server.register(async (instance, options) => {
     registerProgramaAcademicoRoutes(
         instance,
@@ -88,7 +88,7 @@ server.register(rutasAsignatura, {
 });
 
 
-// Periodo Académico
+// Periodo Academico
 server.register(async (instance, options) => {
     registerPeriodoAcademicoRoutes(
         instance,

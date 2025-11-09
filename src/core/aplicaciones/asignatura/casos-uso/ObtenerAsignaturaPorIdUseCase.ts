@@ -5,6 +5,6 @@ export class ObtenerAsignaturaPorIdUseCase {
     constructor(private readonly repositorio: IAsignaturaRepositorio) {}
 
     async findById(id: number): Promise<IAsignatura | null> {
-        return this.repositorio.findById(id);
-    }
-}
+        return this.repositorio.obtenerPorId(id);
+    };
+};

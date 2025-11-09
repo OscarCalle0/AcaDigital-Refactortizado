@@ -3,4 +3,4 @@ export interface ActualizarAsignaturaDTO {
     nombre: string;
     cargaHoraria: number;
     tipo: 'teorica' | 'practica' | 'mixta';
-}
+};
