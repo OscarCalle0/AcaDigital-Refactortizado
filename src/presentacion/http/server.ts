@@ -76,6 +76,7 @@ const definirPlanEstudioUseCase = new DefinirPlanEstudioUseCase(
     planEstudioRepository,
     programaRepository,
     asignaturaRepository
+);
 
 // Oferta Académica
 const ofertaRepositorio = new OfertaAcademicaPGRepositorio();
