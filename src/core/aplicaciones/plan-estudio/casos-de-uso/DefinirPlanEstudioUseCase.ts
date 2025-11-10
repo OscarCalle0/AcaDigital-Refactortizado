@@ -17,7 +17,7 @@ export class DefinirPlanEstudioUseCase {
         
         const programa = await this.programaRepo.obtenerPorId(dto.programaId);
         if (!programa) {
-            throw new Error('Programa académico no encontrado.'); 
+            throw new Error('Programa academico no encontrado.'); 
         };
         
         const asignatura = await this.asignaturaRepo.obtenerPorId(dto.asignaturaId);
@@ -30,7 +30,7 @@ export class DefinirPlanEstudioUseCase {
             dto.asignaturaId
         );
         if (esDuplicado) {
-            throw new Error('La asignatura ya está registrada en este programa.'); 
+            throw new Error('La asignatura ya esta registrada en este programa.'); 
         };
 
         const plan = new PlanEstudio(dto); 

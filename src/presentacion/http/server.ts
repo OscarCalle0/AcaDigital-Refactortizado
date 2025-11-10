@@ -33,6 +33,13 @@ import {
 import { PostgresProgramaAcademicoRepository } from '../../core/infraestructura/postgres/repositorio/postgres-programa-academico.pg.repository.js';
 import { registerProgramaAcademicoRoutes } from './rutas/programa-academico.rutas.js';
 
+//plan de estudio
+import {
+  DefinirPlanEstudioUseCase,
+} from '../../core/aplicaciones/plan-estudio/index.js';
+import { PlanEstudioPGRepository } from '../../core/infraestructura/postgres/repositorio/plan-estudio.pg.repository.js';
+
+
 // --- Inyeccion de Dependencias ---
 const programaRepository = new PostgresProgramaAcademicoRepository();
 
@@ -57,6 +64,13 @@ const obtenerPeriodoPorIdUseCase = new ObtenerPeriodoPorIdUseCase(periodoReposit
 const actualizarPeriodoUseCase = new ActualizarPeriodoUseCase(periodoRepository);
 const eliminarPeriodoUseCase = new EliminarPeriodoUseCase(periodoRepository);
 
+const planEstudioRepository = new PlanEstudioPGRepository();
+const definirPlanEstudioUseCase = new DefinirPlanEstudioUseCase(
+    planEstudioRepository,
+    programaRepository,
+    asignaturaRepository
+);
+
 // --- Servidor Fastify ---
 export const server = fastify({ logger: true });
 
@@ -70,7 +84,9 @@ server.register(async (instance, options) => {
         listarProgramasUseCase,
         obtenerProgramaPorIdUseCase,
         actualizarProgramaUseCase,
-        eliminarProgramaUseCase
+        eliminarProgramaUseCase,
+        definirPlanEstudioUseCase
+        
     );
 }, { prefix: '/api/v1/programas-academicos' });
 
@@ -86,7 +102,6 @@ server.register(rutasAsignatura, {
         eliminarAsignaturaUseCase,
     }
 });
-
 
 // Periodo Academico
 server.register(async (instance, options) => {
