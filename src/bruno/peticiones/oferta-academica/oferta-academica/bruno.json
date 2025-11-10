@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "name": "asignatura-prueba",
+  "name": "oferta-academica",
   "type": "collection",
   "ignore": [
     "node_modules",
