@@ -1,3 +1,4 @@
+console.log('Verificando URL:', process.env.DATABASE_URL);
 import { Pool } from 'pg';
 
 if (!process.env.DATABASE_URL) {
