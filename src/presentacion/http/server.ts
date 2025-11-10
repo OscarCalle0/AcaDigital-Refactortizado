@@ -33,6 +33,11 @@ import {
 import { PostgresProgramaAcademicoRepository } from '../../core/infraestructura/postgres/repositorio/postgres-programa-academico.pg.repository.js';
 import { registerProgramaAcademicoRoutes } from './rutas/programa-academico.rutas.js';
 
+// Oferta Académica
+import { OfertarAsignaturaUseCase } from '../../core/aplicaciones/oferta-academica/casos-de-uso/OfertarAsignaturaUseCase.js';
+import { OfertaAcademicaPGRepositorio } from '../../core/infraestructura/postgres/repositorio/oferta-academica.pg.repositorio.js';
+import rutasOfertaAcademica from './rutas/oferta-academica.rutas.js';
+
 // --- Inyección de Dependencias Manual ---
 const programaRepository = new PostgresProgramaAcademicoRepository();
 
@@ -56,6 +61,16 @@ const listarPeriodosUseCase = new ObtenerPeriodosUseCase(periodoRepository);
 const obtenerPeriodoPorIdUseCase = new ObtenerPeriodoPorIdUseCase(periodoRepository);
 const actualizarPeriodoUseCase = new ActualizarPeriodoUseCase(periodoRepository);
 const eliminarPeriodoUseCase = new EliminarPeriodoUseCase(periodoRepository);
+
+// Oferta Académica
+const ofertaRepositorio = new OfertaAcademicaPGRepositorio();
+
+const ofertarAsignaturaUseCase = new OfertarAsignaturaUseCase(
+    ofertaRepositorio,
+    periodoRepository,       
+    programaRepository,     
+    asignaturaRepository     
+);
 
 // --- Servidor Fastify ---
 export const server = fastify({ logger: true });
@@ -99,6 +114,15 @@ server.register(async (instance, options) => {
         eliminarPeriodoUseCase
     );
 }, { prefix: '/api/v1/periodos' }); 
+
+
+// Oferta Académica
+server.register(rutasOfertaAcademica, {
+    prefix: '/api/v1/ofertas',
+    dependencies: {
+        ofertarAsignaturaUseCase,
+    }
+});
 
 
 // --- Iniciar el Servidor ---
