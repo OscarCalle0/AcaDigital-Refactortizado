@@ -33,6 +33,14 @@ import {
 import { PostgresProgramaAcademicoRepository } from '../../core/infraestructura/postgres/repositorio/postgres-programa-academico.pg.repository.js';
 import { registerProgramaAcademicoRoutes } from './rutas/programa-academico.rutas.js';
 
+
+//plan de estudio
+import {
+  DefinirPlanEstudioUseCase,
+} from '../../core/aplicaciones/plan-estudio/index.js';
+import { PlanEstudioPGRepository } from '../../core/infraestructura/postgres/repositorio/plan-estudio.pg.repository.js';
+
+
 // Oferta Académica
 import { OfertarAsignaturaUseCase } from '../../core/aplicaciones/oferta-academica/casos-de-uso/OfertarAsignaturaUseCase.js';
 import { OfertaAcademicaPGRepositorio } from '../../core/infraestructura/postgres/repositorio/oferta-academica.pg.repositorio.js';
@@ -61,6 +69,13 @@ const listarPeriodosUseCase = new ObtenerPeriodosUseCase(periodoRepository);
 const obtenerPeriodoPorIdUseCase = new ObtenerPeriodoPorIdUseCase(periodoRepository);
 const actualizarPeriodoUseCase = new ActualizarPeriodoUseCase(periodoRepository);
 const eliminarPeriodoUseCase = new EliminarPeriodoUseCase(periodoRepository);
+
+
+const planEstudioRepository = new PlanEstudioPGRepository();
+const definirPlanEstudioUseCase = new DefinirPlanEstudioUseCase(
+    planEstudioRepository,
+    programaRepository,
+    asignaturaRepository
 
 // Oferta Académica
 const ofertaRepositorio = new OfertaAcademicaPGRepositorio();
@@ -108,7 +123,7 @@ server.setErrorHandler((error, request, reply) => {
 
 // --- Registrar Rutas ---
 
-// Programa Académico
+// Programa Academico
 server.register(async (instance, options) => {
     registerProgramaAcademicoRoutes(
         instance,
@@ -116,7 +131,9 @@ server.register(async (instance, options) => {
         listarProgramasUseCase,
         obtenerProgramaPorIdUseCase,
         actualizarProgramaUseCase,
-        eliminarProgramaUseCase
+        eliminarProgramaUseCase,
+        definirPlanEstudioUseCase
+        
     );
 }, { prefix: '/api/v1/programas-academicos' });
 
@@ -133,8 +150,7 @@ server.register(rutasAsignatura, {
     }
 });
 
-
-// Periodo Académico
+// Periodo Academico
 server.register(async (instance, options) => {
     registerPeriodoAcademicoRoutes(
         instance,
