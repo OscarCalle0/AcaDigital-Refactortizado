@@ -75,6 +75,37 @@ const ofertarAsignaturaUseCase = new OfertarAsignaturaUseCase(
 // --- Servidor Fastify ---
 export const server = fastify({ logger: true });
 
+
+
+server.setErrorHandler((error, request, reply) => {
+    if (error.code === 'FST_ERR_VALIDATION' && Array.isArray(error.validation)) {
+        
+        const validationError: any = error.validation.find(e => e); 
+        let errorMessage: string;
+
+        if (validationError) {
+            if (validationError.keyword === 'minimum' && validationError.params?.limit === 1) {
+                errorMessage = 'El cupo disponible debe ser mayor que cero.';
+            } else {
+                const field = validationError.dataPath ? validationError.dataPath.replace('/', '') : 'solicitud';
+                errorMessage = `Error de validación en el campo '${field}': ${validationError.message}`;
+            }
+            
+            return reply.code(400).send({ error: errorMessage });
+        }
+    }
+    
+    if (error.statusCode) {
+        reply.log.error(error);
+        reply.status(error.statusCode).send(error);
+    } else {
+        reply.log.error(error);
+        reply.status(500).send({ error: 'Error interno del servidor.' });
+    }
+});
+
+
+
 // --- Registrar Rutas ---
 
 // Programa Académico
