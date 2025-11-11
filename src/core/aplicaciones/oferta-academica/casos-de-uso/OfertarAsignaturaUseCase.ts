@@ -27,7 +27,7 @@ export class OfertarAsignaturaUseCase {
             throw new Error(`404: Programa con ID ${programaId} no encontrado.`);
         }
 
-        const asignatura = await this.asignaturaRepositorio.findById(asignaturaId);
+        const asignatura = await this.asignaturaRepositorio.obtenerPorId(asignaturaId);
         if (!asignatura) {
             throw new Error(`404: Asignatura con ID ${asignaturaId} no encontrada.`);
         }
