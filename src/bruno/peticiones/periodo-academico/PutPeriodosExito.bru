@@ -1,18 +1,20 @@
 meta {
   name: Éxito - Actualizar Periodo
   type: http
-  res: none
+  seq: 1
 }
 
 put {
-  url: http://localhost:3000/api/v1/periodos/{{id_periodo_existente}}
+  url: http://localhost:3000/api/v1/periodos/{{id}}
   body: json
   auth: none
 }
 
 body:json {
-  "nombre": "2025-II",
-  "fechaInicio": "2025-07-01",
-  "fechaFin": "2025-12-31",
-  "estado": "activo"
+  {
+    "nombre": "2025-IV",
+    "fechaInicio": "2025-07-01",
+    "fechaFin": "2025-12-31",
+    "estado": "activo"
+  }
 }

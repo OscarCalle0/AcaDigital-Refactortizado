@@ -1,15 +1,17 @@
 meta {
   name: Error - Transición Inválida (Cerrado a Activo)
   type: http
-  res: none
+  seq: 1
 }
 
 put {
-  url: http://localhost:3000/api/v1/periodos/{{id_periodo_cerrado}}
+  url: http://localhost:3000/api/v1/periodos/{{id}}
   body: json
   auth: none
 }
 
 body:json {
-  "estado": "activo"
+  {
+    "estado": "activo"
+  }
 }

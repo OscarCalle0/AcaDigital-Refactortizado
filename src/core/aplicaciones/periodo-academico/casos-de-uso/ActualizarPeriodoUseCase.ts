@@ -41,17 +41,20 @@ export class ActualizarPeriodoUseCase {
             }
         }
 
-            if (periodoEntidad.estado === 'activo') {
-                const periodosTraslapados = await this.repo.obtenerPeriodosActivosTraslapados(
-                    periodoEntidad.fechaInicio,
-                    periodoEntidad.fechaFin,
-                    periodoEntidad.id
-                );
-                if (periodosTraslapados && periodosTraslapados.length > 0) {
-                    throw new Error('El período se solapa con otro período activo existente.');
-                }
+        // Si el estado final del periodo es 'activo', validar solapamiento.
+        // Esto cubre tanto si ya era activo como si se acaba de activar.
+        if (periodoEntidad.estado === 'activo') {
+            const periodosTraslapados = await this.repo.obtenerPeriodosActivosTraslapados(
+                periodoEntidad.fechaInicio,
+                periodoEntidad.fechaFin,
+                periodoEntidad.id
+            );
+            if (periodosTraslapados && periodosTraslapados.length > 0) {
+                throw new Error('El período se solapa con otro período activo existente.');
             }
-                periodoEntidad.updatedAt = new Date(); 
+        }
+
+        periodoEntidad.updatedAt = new Date(); 
 
         
 
