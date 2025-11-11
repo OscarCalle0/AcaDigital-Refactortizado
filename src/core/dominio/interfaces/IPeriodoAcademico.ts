@@ -7,4 +7,8 @@ export interface IPeriodoAcademico {
     estado: EstadoPeriodo;
     createdAt: Date;
     updatedAt: Date;
+
+    // Métodos de dominio
+    activar(): void;
+    cerrar(): void;
 };

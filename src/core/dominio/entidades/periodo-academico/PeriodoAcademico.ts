@@ -3,6 +3,12 @@ import type { IPeriodoAcademico } from "../../interfaces/IPeriodoAcademico.js";
 import { randomUUID } from 'crypto';
 
 export class PeriodoAcademico implements IPeriodoAcademico {
+    cerrar() {
+        throw new Error('Method not implemented.');
+    }
+    activar() {
+        throw new Error('Method not implemented.');
+    }
     public id: string;
     public nombre: string;
     public fechaInicio: Date;
