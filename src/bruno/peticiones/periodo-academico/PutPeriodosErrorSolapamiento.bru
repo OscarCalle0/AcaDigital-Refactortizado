@@ -1,0 +1,17 @@
+meta {
+  name: Error - Solapamiento Periodo Activo
+  type: http
+  res: none
+}
+
+put {
+  url: http://localhost:3000/api/v1/periodos/{{id_periodo_B_inactivo}}
+  body: json
+  auth: none
+}
+
+body:json {
+  "estado": "activo",
+  "fechaInicio": "2024-06-01",
+  "fechaFin": "2024-11-01"
+}

@@ -18,19 +18,6 @@ const crearSchema = {
     }
 };
 
-const actualizarSchema = {
-    body: {
-        type: 'object',
-        properties: {
-            nombre: { type: 'string', pattern: '^[0-9]{4}-(I|II|III|IV)$' },
-            fechaInicio: { type: 'string', format: 'date' },
-            fechaFin: { type: 'string', format: 'date' },
-            estado: { type: 'string', enum: ['activo', 'inactivo', 'cerrado'] }
-        },
-        additionalProperties: false
-    }
-};
-
 interface Params {
     id: string;
 }
@@ -69,7 +56,7 @@ export function registerPeriodoAcademicoRoutes(
     });
 
     // PUT 
-    server.put<{ Params: Params }>('/:id', { schema: actualizarSchema }, async (req, reply) => {
+    server.put<{ Params: Params }>('/:id', async (req, reply) => {
         try {
             const id = req.params.id;
             const resultado = await actualizar.ejecutar(id, req.body as any);
